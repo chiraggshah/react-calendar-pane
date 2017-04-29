@@ -1,5 +1,5 @@
 {
-  "name": "react-calendar-pane",
+  "name": "react-calendar-pane-modified",
   "description": "React calendar component",
   "main": "./lib/Calendar.js",
   "version": "0.0.28",
@@ -10,9 +10,9 @@
   "bugs": {
     "url": "https://github.com/chiraggshah/react-calendar-pane"
   },
-  "homepage": "https://github.com/tomkp/react-calendar-pane",
+  "homepage": "https://github.com/chiraggshah/react-calendar-pane",
   "license": "MIT",
-  "author": "tomkp <tom@tomkp.com>",
+  "author": "chirag <shahchirag1709@gmail.com>",
   "keywords": [
     "react",
     "react-component",
