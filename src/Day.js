@@ -3,35 +3,35 @@ import PropTypes from 'prop-types';
 
 export default class Day extends Component {
   render() {
-    let classes = ['Day'];
-    if (this.props.today.isSame(this.props.date, 'day')) {
-      classes.push('today');
+    const {today, date, selected, children, handleClick, classes} = this.props;
+    let newClasses = ['Day'];
+    if (today.isSame(date, 'day')) {
+      newClasses.push('today');
     }
-    if (this.props.selected && this.props.selected.isSame(this.props.date, 'day')) {
-      classes.push('selected');
+    if (selected && selected.isSame(date, 'day')) {
+      newClasses.push('selected');
     }
-    classes = classes.concat(this.props.classes);
+    newClasses = newClasses.concat(classes);
 
-    let body
-    if (!!this.props.children) {
-      body = this.props.children;
-    }
-    else {
+    let body;
+    if (children) {
+      body = children;
+    } else {
       body = (
         <button
           className="Day-inner"
-          onClick={() => this.props.handleClick(this.props.date)}
+          onClick={() => handleClick(date)}
           type="button"
         >
-          {this.props.date.format('D')}
+          {date.format('D')}
         </button>
       )
     }
 
     return (
-      <td className={classes.join(' ')}
-          data-date={this.props.date.toISOString()}
-          data-day={this.props.date.format('D')}
+      <td className={newClasses.join(' ')}
+          data-date={date.toISOString()}
+          data-day={date.format('D')}
       >
         {body}
       </td>

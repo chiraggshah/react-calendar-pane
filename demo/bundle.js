@@ -437,33 +437,39 @@ var Day = function (_Component) {
   _createClass(Day, [{
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _props = this.props,
+          today = _props.today,
+          date = _props.date,
+          selected = _props.selected,
+          children = _props.children,
+          handleClick = _props.handleClick,
+          classes = _props.classes;
 
-      var classes = ['Day'];
-      if (this.props.today.isSame(this.props.date, 'day')) {
-        classes.push('today');
+      var newClasses = ['Day'];
+      if (today.isSame(date, 'day')) {
+        newClasses.push('today');
       }
-      if (this.props.selected && this.props.selected.isSame(this.props.date, 'day')) {
-        classes.push('selected');
+      if (selected && selected.isSame(date, 'day')) {
+        newClasses.push('selected');
       }
-      classes = classes.concat(this.props.classes);
+      newClasses = newClasses.concat(classes);
 
       var body = void 0;
-      if (!!this.props.children) {
-        body = this.props.children;
+      if (children) {
+        body = children;
       } else {
         body = _react2.default.createElement('button', {
           className: 'Day-inner',
           onClick: function onClick() {
-            return _this2.props.handleClick(_this2.props.date);
+            return handleClick(date);
           },
           type: 'button'
-        }, this.props.date.format('D'));
+        }, date.format('D'));
       }
 
-      return _react2.default.createElement('td', { className: classes.join(' '),
-        'data-date': this.props.date.toISOString(),
-        'data-day': this.props.date.format('D')
+      return _react2.default.createElement('td', { className: newClasses.join(' '),
+        'data-date': date.toISOString(),
+        'data-day': date.format('D')
       }, body);
     }
   }]);
