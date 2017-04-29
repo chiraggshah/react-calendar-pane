@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 
-export default React.createClass({
-    render() {
-        return <th className="DayOfWeek">{this.props.date.format('dd')}</th>
-    }
-});
+export default class DayOfWeek extends Component {
+  render() {
+    return <th className="DayOfWeek">{this.props.date.format('dd')}</th>
+  }
+}
 
 

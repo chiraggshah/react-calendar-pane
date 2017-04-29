@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 
-export default React.createClass({
-    render() {
-        return <tr className='Week'>{this.props.children}</tr>
-    }
-});
+export default class Week extends Component {
+  render() {
+    return <tr className='Week'>{this.props.children}</tr>
+  }
+};
 
 
