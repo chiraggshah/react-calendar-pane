@@ -59,15 +59,11 @@ export default class Calendar extends Component {
   }
 
   render() {
-    const {startOfWeekIndex, dayRenderer} = this.props;
+    const {startOfWeekIndex, dayRenderer, className} = this.props;
+    const {date, month} = this.state;
 
-
-    let classes = ['Calendar', this.props.className].join(' ');
-
-    let today = moment();
-
-    let date = this.state.date;
-    let month = this.state.month;
+    const classes = ['Calendar', className].join(' ');
+    const today = moment();
 
     let current = month.clone().startOf('month').day(startOfWeekIndex);
     if (current.date() > 1 && current.date() < 7) {
@@ -95,7 +91,7 @@ export default class Calendar extends Component {
       if (!current.isSame(month, 'month')) {
         dayClasses = dayClasses.concat(['other-month']);
       }
-      let isCurrentMonth = current.isSame(month, 'month');
+
       let props = {
         date: current.clone(),
         selected: date,
@@ -105,10 +101,7 @@ export default class Calendar extends Component {
         handleClick: this.handleClick.bind(this),
       };
 
-      let children
-      if (!!dayRenderer) {
-        children = dayRenderer(props);
-      }
+      let children = dayRenderer ? dayRenderer(props) : null;
 
       days.push(
         <Day key={i++} {...props}>
@@ -153,13 +146,13 @@ export default class Calendar extends Component {
     return (
       <table className={classes}>
         <thead>
-        {nav}
+          {nav}
         </thead>
         <thead>
-        <tr className="days-header">{daysOfWeek}</tr>
+          <tr className="days-header">{daysOfWeek}</tr>
         </thead>
         <tbody>
-        {elements}
+          {elements}
         </tbody>
       </table>
     );

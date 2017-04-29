@@ -276,14 +276,14 @@ var Calendar = function (_Component) {
 
       var _props = this.props,
           startOfWeekIndex = _props.startOfWeekIndex,
-          dayRenderer = _props.dayRenderer;
+          dayRenderer = _props.dayRenderer,
+          className = _props.className;
+      var _state2 = this.state,
+          date = _state2.date,
+          month = _state2.month;
 
-      var classes = ['Calendar', this.props.className].join(' ');
-
+      var classes = ['Calendar', className].join(' ');
       var today = (0, _moment2.default)();
-
-      var date = this.state.date;
-      var month = this.state.month;
 
       var current = month.clone().startOf('month').day(startOfWeekIndex);
       if (current.date() > 1 && current.date() < 7) {
@@ -311,7 +311,7 @@ var Calendar = function (_Component) {
         if (!current.isSame(month, 'month')) {
           dayClasses = dayClasses.concat(['other-month']);
         }
-        var isCurrentMonth = current.isSame(month, 'month');
+
         var props = {
           date: current.clone(),
           selected: date,
@@ -321,10 +321,7 @@ var Calendar = function (_Component) {
           handleClick: this.handleClick.bind(this)
         };
 
-        var children = void 0;
-        if (!!dayRenderer) {
-          children = dayRenderer(props);
-        }
+        var children = dayRenderer ? dayRenderer(props) : null;
 
         days.push(_react2.default.createElement(_Day2.default, _extends({ key: i++ }, props), children));
         current.add(1, 'days');
