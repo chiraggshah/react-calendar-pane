@@ -220,39 +220,40 @@ var Calendar = function (_Component) {
   _createClass(Calendar, [{
     key: 'componentWillMount',
     value: function componentWillMount() {
-      _moment2.default.locale(this.props.locale);
+      var locale = this.props.locale;
+      var _state = this.state,
+          date = _state.date,
+          month = _state.month;
 
-      if (!!this.state.date) {
-        this.state.date.locale(this.props.locale);
+      _moment2.default.locale(locale);
+
+      if (date) {
+        date.locale(locale);
       }
 
-      this.state.month.locale(this.props.locale);
+      month.locale(locale);
     }
   }, {
     key: 'componentWillUpdate',
     value: function componentWillUpdate(nextProps, nextState) {
-      _moment2.default.locale(this.props.locale);
+      var locale = this.props.locale;
+      var date = nextState.date,
+          month = nextState.month;
 
-      if (!!nextState.date) {
-        nextState.date.locale(this.props.locale);
+      _moment2.default.locale(locale);
+
+      if (date) {
+        date.locale(locale);
       }
 
-      nextState.month.locale(this.props.locale);
+      month.locale(locale);
     }
   }, {
     key: 'handleClick',
-    value: function handleClick(date) {
-      var flag = this.props.onSelect(date, this.state.date, this.state.month);
-
-      if (flag === true) {
-        this.setState({
-          date: (0, _moment2.default)(date)
-        });
-      } else if (flag === false) {
-        this.setState({
-          date: null
-        });
-      }
+    value: function handleClick(selectedDate) {
+      var dateValid = this.props.onSelect(selectedDate, this.state.date, this.state.month);
+      var newDate = dateValid ? (0, _moment2.default)(selectedDate) : null;
+      this.setState({ date: newDate });
     }
   }, {
     key: 'previous',

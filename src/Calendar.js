@@ -17,38 +17,33 @@ export default class Calendar extends Component {
   }
 
   componentWillMount() {
-    moment.locale(this.props.locale);
+    const {locale} = this.props;
+    const {date, month} = this.state;
+    moment.locale(locale);
 
-    if (!!this.state.date) {
-      this.state.date.locale(this.props.locale)
+    if (date) {
+      date.locale(locale)
     }
 
-    this.state.month.locale(this.props.locale)
+    month.locale(locale)
   }
 
   componentWillUpdate(nextProps, nextState) {
-    moment.locale(this.props.locale);
+    const {locale} = this.props;
+    const {date, month} = nextState;
+    moment.locale(locale);
 
-    if (!!nextState.date) {
-      nextState.date.locale(this.props.locale)
+    if (date) {
+      date.locale(locale)
     }
 
-    nextState.month.locale(this.props.locale)
+    month.locale(locale)
   }
 
-  handleClick(date) {
-    let flag = this.props.onSelect(date, this.state.date, this.state.month);
-
-    if (flag === true) {
-      this.setState({
-        date: moment(date)
-      });
-    }
-    else if (flag === false) {
-      this.setState({
-        date: null
-      })
-    }
+  handleClick(selectedDate) {
+    let dateValid = this.props.onSelect(selectedDate, this.state.date, this.state.month);
+    const newDate = dateValid ? moment(selectedDate) : null;
+    this.setState({date: newDate})
   }
 
   previous() {
