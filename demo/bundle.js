@@ -271,6 +271,8 @@ var Calendar = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this2 = this;
+
       var _props = this.props,
           startOfWeekIndex = _props.startOfWeekIndex,
           dayRenderer = _props.dayRenderer;
@@ -335,7 +337,11 @@ var Calendar = function (_Component) {
       var nav = void 0;
 
       if (this.props.useNav) {
-        nav = _react2.default.createElement('tr', { className: 'month-header' }, _react2.default.createElement('th', { className: 'nav previous' }, _react2.default.createElement('button', { className: 'nav-inner', onClick: this.previous, type: 'button' }, '\xAB')), _react2.default.createElement('th', { colSpan: '5' }, _react2.default.createElement('span', { className: 'month' }, month.format('MMMM')), ' ', _react2.default.createElement('span', { className: 'year' }, month.format('YYYY'))), _react2.default.createElement('th', { className: 'nav next' }, _react2.default.createElement('button', { className: 'nav-inner', onClick: this.next, type: 'button' }, '\xBB')));
+        nav = _react2.default.createElement('tr', { className: 'month-header' }, _react2.default.createElement('th', { className: 'nav previous' }, _react2.default.createElement('button', { className: 'nav-inner', onClick: function onClick() {
+            return _this2.previous();
+          }, type: 'button' }, '\xAB')), _react2.default.createElement('th', { colSpan: '5' }, _react2.default.createElement('span', { className: 'month' }, month.format('MMMM')), ' ', _react2.default.createElement('span', { className: 'year' }, month.format('YYYY'))), _react2.default.createElement('th', { className: 'nav next' }, _react2.default.createElement('button', { className: 'nav-inner', onClick: function onClick() {
+            return _this2.next();
+          }, type: 'button' }, '\xBB')));
       } else {
         nav = _react2.default.createElement('tr', { className: 'month-header' }, _react2.default.createElement('th', { colSpan: '7' }, _react2.default.createElement('span', { className: 'month' }, month.format('MMMM')), ' ', _react2.default.createElement('span', { className: 'year' }, month.format('YYYY'))));
       }
