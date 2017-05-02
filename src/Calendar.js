@@ -90,8 +90,10 @@ export default class Calendar extends Component {
 
     while (current.isBefore(end)) {
       let dayClasses = this.props.dayClasses(current);
+      let otherMonth = false;
       if (!current.isSame(month, 'month')) {
         dayClasses = dayClasses.concat(['other-month']);
+        otherMonth = true;
       }
 
       let props = {
@@ -101,6 +103,7 @@ export default class Calendar extends Component {
         today: today,
         classes: dayClasses,
         handleClick: this.handleClick.bind(this),
+        otherMonth: otherMonth,
       };
 
       let children = dayRenderer ? dayRenderer(props) : null;

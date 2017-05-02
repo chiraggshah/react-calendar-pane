@@ -32,6 +32,14 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 function customDayRenderer(props) {
+
+  var dayHours = props.otherMonth ? null : _react2.default.createElement(
+    'span',
+    null,
+    _react2.default.createElement('br', null),
+    (Math.random() * 10).toFixed(2)
+  );
+
   return _react2.default.createElement(
     'a',
     { onClick: function onClick() {
@@ -41,8 +49,7 @@ function customDayRenderer(props) {
       'div',
       { className: 'Day-inner' },
       props.date.format('D'),
-      _react2.default.createElement('br', null),
-      (Math.random() * 10).toFixed(2)
+      dayHours
     )
   );
 }
@@ -316,8 +323,10 @@ var Calendar = function (_Component) {
 
       while (current.isBefore(end)) {
         var dayClasses = this.props.dayClasses(current);
+        var otherMonth = false;
         if (!current.isSame(month, 'month')) {
           dayClasses = dayClasses.concat(['other-month']);
+          otherMonth = true;
         }
 
         var props = {
@@ -326,7 +335,8 @@ var Calendar = function (_Component) {
           month: month,
           today: today,
           classes: dayClasses,
-          handleClick: this.handleClick.bind(this)
+          handleClick: this.handleClick.bind(this),
+          otherMonth: otherMonth
         };
 
         var children = dayRenderer ? dayRenderer(props) : null;

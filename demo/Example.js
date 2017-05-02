@@ -5,15 +5,20 @@ import moment from 'moment';
 import momentFr from 'moment/locale/fr';
 
 function customDayRenderer(props) {
+
+  const dayHours = props.otherMonth ? null : <span>
+    <br />
+    {(Math.random() * 10).toFixed(2)}
+  </span>;
+
   return (
     <a onClick={() => props.handleClick(props.date)}>
       <div className="Day-inner" >
         {props.date.format('D')}
-        <br />
-        {(Math.random() * 10).toFixed(2)}
+        {dayHours}
       </div>
     </a>
-  );
+  )
 }
 
 class Example extends Component {
