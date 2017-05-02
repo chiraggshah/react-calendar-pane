@@ -6,9 +6,12 @@ import momentFr from 'moment/locale/fr';
 
 function customDayRenderer(props) {
   return (
-    <a className="Day-inner" href={'#' + props.date.format('YYYY-MM-DD')}
-       onClick={() => props.handleClick(props.date)}>
-      {props.date.format('D')}
+    <a onClick={() => props.handleClick(props.date)}>
+      <div className="Day-inner" >
+        {props.date.format('D')}
+        <br />
+        {(Math.random() * 10).toFixed(2)}
+      </div>
     </a>
   );
 }
@@ -45,7 +48,7 @@ class Example extends Component {
         <p>French calendar</p>
         <Calendar onSelect={(d, pD, cM) => this.onSelect(d, pD, cM)} dayClasses={dayClasses} locale="fr" startOfWeekIndex={1}/>
         <p>Calendar with custom day renderer</p>
-        <Calendar onSelect={(d, pD, cM) => this.onSelect(d, pD, cM)} dayRenderer={customDayRenderer}/>
+        <Calendar onSelect={(d, pD, cM) => this.onSelect(d, pD, cM)} dayRenderer={customDayRenderer} weeklyTotals={[10, 20, 30, 40, 50]} />
       </div>
     );
   }

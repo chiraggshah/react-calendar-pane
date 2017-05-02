@@ -34,11 +34,16 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 function customDayRenderer(props) {
   return _react2.default.createElement(
     'a',
-    { className: 'Day-inner', href: '#' + props.date.format('YYYY-MM-DD'),
-      onClick: function onClick() {
+    { onClick: function onClick() {
         return props.handleClick(props.date);
       } },
-    props.date.format('D')
+    _react2.default.createElement(
+      'div',
+      { className: 'Day-inner' },
+      props.date.format('D'),
+      _react2.default.createElement('br', null),
+      (Math.random() * 10).toFixed(2)
+    )
   );
 }
 
@@ -111,7 +116,7 @@ var Example = function (_Component) {
         ),
         _react2.default.createElement(_Calendar2.default, { onSelect: function onSelect(d, pD, cM) {
             return _this2.onSelect(d, pD, cM);
-          }, dayRenderer: customDayRenderer })
+          }, dayRenderer: customDayRenderer, weeklyTotals: [10, 20, 30, 40, 50] })
       );
     }
   }]);
@@ -277,7 +282,8 @@ var Calendar = function (_Component) {
       var _props = this.props,
           startOfWeekIndex = _props.startOfWeekIndex,
           dayRenderer = _props.dayRenderer,
-          className = _props.className;
+          className = _props.className,
+          weeklyTotals = _props.weeklyTotals;
       var _state2 = this.state,
           date = _state2.date,
           month = _state2.month;
@@ -306,6 +312,8 @@ var Calendar = function (_Component) {
         daysOfWeek.push(_react2.default.createElement(_DayOfWeek2.default, { key: dayOfWeekKey, date: day.clone() }));
         day.add(1, 'days');
       }
+      daysOfWeek.push(_react2.default.createElement('th', { key: 'total', className: 'DayOfWeek' }, 'Total'));
+
       while (current.isBefore(end)) {
         var dayClasses = this.props.dayClasses(current);
         if (!current.isSame(month, 'month')) {
@@ -326,9 +334,14 @@ var Calendar = function (_Component) {
         days.push(_react2.default.createElement(_Day2.default, _extends({ key: i++ }, props), children));
         current.add(1, 'days');
         if (current.day() === startOfWeekIndex) {
-          var weekKey = 'week' + week++;
+          var weekTotal = weeklyTotals ? weeklyTotals[parseInt(week) - 1] : 0;
+          var weekTotalKey = 'week-total-' + week;
+          var weekKey = 'week-' + week;
+
+          days.push(_react2.default.createElement('td', { className: dayClasses, key: weekTotalKey }, weekTotal));
           elements.push(_react2.default.createElement(_Week2.default, { key: weekKey }, days));
           days = [];
+          week = week + 1;
         }
       }
 
@@ -337,7 +350,7 @@ var Calendar = function (_Component) {
       if (this.props.useNav) {
         nav = _react2.default.createElement('tr', { className: 'month-header' }, _react2.default.createElement('th', { className: 'nav previous' }, _react2.default.createElement('button', { className: 'nav-inner', onClick: function onClick() {
             return _this2.previous();
-          }, type: 'button' }, '\xAB')), _react2.default.createElement('th', { colSpan: '5' }, _react2.default.createElement('span', { className: 'month' }, month.format('MMMM')), ' ', _react2.default.createElement('span', { className: 'year' }, month.format('YYYY'))), _react2.default.createElement('th', { className: 'nav next' }, _react2.default.createElement('button', { className: 'nav-inner', onClick: function onClick() {
+          }, type: 'button' }, '\xAB')), _react2.default.createElement('th', { colSpan: '6' }, _react2.default.createElement('span', { className: 'month' }, month.format('MMMM')), ' ', _react2.default.createElement('span', { className: 'year' }, month.format('YYYY'))), _react2.default.createElement('th', { className: 'nav next' }, _react2.default.createElement('button', { className: 'nav-inner', onClick: function onClick() {
             return _this2.next();
           }, type: 'button' }, '\xBB')));
       } else {

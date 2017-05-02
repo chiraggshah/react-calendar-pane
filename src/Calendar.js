@@ -59,7 +59,7 @@ export default class Calendar extends Component {
   }
 
   render() {
-    const {startOfWeekIndex, dayRenderer, className} = this.props;
+    const {startOfWeekIndex, dayRenderer, className, weeklyTotals} = this.props;
     const {date, month} = this.state;
 
     const classes = ['Calendar', className].join(' ');
@@ -86,6 +86,8 @@ export default class Calendar extends Component {
       daysOfWeek.push(<DayOfWeek key={dayOfWeekKey} date={day.clone()}/>);
       day.add(1, 'days');
     }
+    daysOfWeek.push(<th key="total" className="DayOfWeek">Total</th>);
+
     while (current.isBefore(end)) {
       let dayClasses = this.props.dayClasses(current);
       if (!current.isSame(month, 'month')) {
@@ -110,9 +112,16 @@ export default class Calendar extends Component {
       );
       current.add(1, 'days');
       if (current.day() === startOfWeekIndex) {
-        let weekKey = 'week' + week++;
+        const weekTotal = weeklyTotals ? weeklyTotals[parseInt(week)-1] : 0;
+        const weekTotalKey = `week-total-${week}`;
+        const weekKey = `week-${week}`;
+
+        days.push(
+          <td className={dayClasses} key={weekTotalKey}>{weekTotal}</td>
+        );
         elements.push(<Week key={weekKey}>{days}</Week>);
         days = [];
+        week = week+1;
       }
     }
 
@@ -124,7 +133,7 @@ export default class Calendar extends Component {
           <th className="nav previous">
             <button className="nav-inner" onClick={() => this.previous()} type="button">«</button>
           </th>
-          <th colSpan="5">
+          <th colSpan="6">
             <span className="month">{month.format('MMMM')}</span> <span className="year">{month.format('YYYY')}</span>
           </th>
           <th className="nav next">
